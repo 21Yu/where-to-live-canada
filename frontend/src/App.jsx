@@ -1,11 +1,16 @@
+import { useState } from 'react'
+import Chart from './components/Chart';
+import Header from './components/Header';
+
 function App() {
+  const [count, setCount] = useState(0)
+
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">
-        Hello, React + Vite + Tailwind!
-      </h1>
-    </div>
+    <>
+      <Header />
+      <Chart />
+    </>
   )
 }
 
-export default App;
+export default App
