@@ -1,24 +1,17 @@
 export default function Header() {
   return (
-    <header className="bg-blue-600 text-white shadow-md">
-      <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
-        {/* Logo / Title */}
-        <h1 className="text-2xl font-bold">Where to Live Canada</h1>
+    <header className="w-full" style={{ borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+      <div className="max-w-7xl mx-auto flex items-center justify-between py-3 px-4">
+        <div className="flex items-center gap-3">
+          <div className="rounded-md" style={{ width: 32, height: 32, background: 'linear-gradient(135deg,#7c3aed,#06b6d4)' }} />
+          <h1 className="text-lg font-semibold">Where to Live</h1>
+          <span className="muted ml-2 text-sm">Canada</span>
+        </div>
 
-        {/* Navigation */}
-        <nav className="space-x-6">
-          <a href="#" className="hover:text-gray-200 font-medium">
-            Home
-          </a>
-          <a href="#" className="hover:text-gray-200 font-medium">
-            Cities
-          </a>
-          <a href="#" className="hover:text-gray-200 font-medium">
-            Trends
-          </a>
-          <a href="#" className="hover:text-gray-200 font-medium">
-            About
-          </a>
+        <nav className="flex items-center gap-5">
+          <a className="muted hover:text-white text-sm" href="#">Overview</a>
+          <a className="muted hover:text-white text-sm" href="#">Cities</a>
+          <a className="muted hover:text-white text-sm" href="#">Explore</a>
         </nav>
       </div>
     </header>
