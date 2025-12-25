@@ -7,12 +7,6 @@ export default function Header() {
           <h1 className="text-lg font-semibold">Where to Live</h1>
           <span className="muted ml-2 text-sm">Canada</span>
         </div>
-
-        <nav className="flex items-center gap-5">
-          <a className="muted hover:text-white text-sm" href="#">Overview</a>
-          <a className="muted hover:text-white text-sm" href="#">Cities</a>
-          <a className="muted hover:text-white text-sm" href="#">Explore</a>
-        </nav>
       </div>
     </header>
   );
