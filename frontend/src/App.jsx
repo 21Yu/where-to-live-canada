@@ -1,21 +1,16 @@
 import { useState } from 'react';
 import Header from './components/Header';
 import HousingChart from './components/HousingChart';
-import EconomyChart from './components/EconomyChart';
+import LaborChart from './components/LaborChart';
 import CostChart from './components/CostChart';
 import PopulationChart from './components/PopulationChart';
 
 function App() {
   const [selectedMemberId, setSelectedMemberId] = useState(1);
   const [appliedPopMemberId, setAppliedPopMemberId] = useState(1);
-  const [appliedCostMemberId, setAppliedCostMemberId] = useState();
-
-  // Safe default to avoid runtime errors when data hasn't loaded yet.
-  // Replace this with real fetched/imported data later.
-  const cityData = {
-    housing: [],
-    economy: [],
-  };
+  const [appliedCostMemberId, setAppliedCostMemberId] = useState(null);
+  const [appliedLaborMemberId, setAppliedLaborMemberId] = useState(null);
+  const [appliedHousingMemberId, setAppliedHousingMemberId] = useState(null);
 
   const members_population = [
     { memberId: 1, memberNameEn: "Canada" },
@@ -30,7 +25,6 @@ function App() {
     { memberId: 10, memberNameEn: "Alberta" },
     { memberId: 11, memberNameEn: "British Columbia" },
     { memberId: 12, memberNameEn: "Yukon" },
-    { memberId: 13, memberNameEn: "Northwest Territories including Nunavut", terminated: 1 },
     { memberId: 14, memberNameEn: "Northwest Territories" },
     { memberId: 15, memberNameEn: "Nunavut" },
   ];
@@ -52,6 +46,34 @@ function App() {
     { memberId: 31, memberNameEn: "Nunavut" },
   ];
 
+  const members_labor = [
+    { memberId: 1, memberNameEn: "Canada" },
+    { memberId: 2, memberNameEn: "Newfoundland and Labrador" },
+    { memberId: 3, memberNameEn: "Prince Edward Island" },
+    { memberId: 4, memberNameEn: "Nova Scotia" },
+    { memberId: 5, memberNameEn: "New Brunswick" },
+    { memberId: 6, memberNameEn: "Quebec" },
+    { memberId: 7, memberNameEn: "Ontario" },
+    { memberId: 8, memberNameEn: "Manitoba" },
+    { memberId: 9, memberNameEn: "Saskatchewan" },
+    { memberId: 10, memberNameEn: "Alberta" },
+    { memberId: 11, memberNameEn: "British Columbia" },
+  ];
+
+  const member_housing = [
+    { memberId: 1, memberNameEn: "Canada" },
+    { memberId: 3, memberNameEn: "Newfoundland and Labrador" },
+    { memberId: 5, memberNameEn: "Prince Edward Island" },
+    { memberId: 7, memberNameEn: "Nova Scotia" },
+    { memberId: 9, memberNameEn: "New Brunswick" },
+    { memberId: 11, memberNameEn: "Quebec" },
+    { memberId: 17, memberNameEn: "Ontario" },
+    { memberId: 29, memberNameEn: "Manitoba" },
+    { memberId: 31, memberNameEn: "Saskatchewan" },
+    { memberId: 34, memberNameEn: "Alberta" },
+    { memberId: 37, memberNameEn: "British Columbia" },
+  ];
+
   return (
     <div className="app-root min-h-screen bg-gray-900 text-white">
       <Header />
@@ -67,19 +89,39 @@ function App() {
                   value={selectedMemberId}
                   onChange={(e) => setSelectedMemberId(Number(e.target.value))}
                 >
-                  {members_population.filter((m) => !m.terminated).map((m) => (
-                    <option key={m.memberId} value={m.memberId} className="bg-gray-800">
-                      {m.memberNameEn}
+                  {members_population.map((p) => (
+                    <option key={p.memberId} value={p.memberId} className="bg-gray-800">
+                      {p.memberNameEn}
                     </option>
                   ))}
                 </select>
                 <button
                   className="px-2 py-1 rounded bg-emerald-600 text-white"
                   onClick={() => {
-                    setAppliedPopMemberId(selectedMemberId);
-                    const pop = members_population.find(m => m.memberId === selectedMemberId);
-                    const costMatch = pop ? members_cost.find(c => c.memberNameEn === pop.memberNameEn) : undefined;
-                    setAppliedCostMemberId(costMatch ? costMatch.memberId : undefined);
+                    const selectedPopMember = members_population.find(
+                      m => m.memberId === selectedMemberId
+                    );
+
+                    if (!selectedPopMember) return;
+
+                    const name = selectedPopMember.memberNameEn;
+
+                    const costMatch = members_cost.find(
+                      c => c.memberNameEn === name
+                    )
+
+                    const laborMatch = members_labor.find(
+                      l => l.memberNameEn === name 
+                    );
+
+                    const housingMatch = member_housing.find(
+                      h => h.memberNameEn === name
+                    )
+
+                    setAppliedPopMemberId(selectedPopMember.memberId);
+                    setAppliedCostMemberId(costMatch?.memberId);
+                    setAppliedLaborMemberId(laborMatch?.memberId);
+                    setAppliedHousingMemberId(housingMatch?.memberId);
                   }}
                 >
                   Show
@@ -91,11 +133,11 @@ function App() {
           <section className="md:col-span-3 h-full">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 h-full" style={{ gridAutoRows: 'minmax(0, 1fr)' }}>
               <div style={{ gridRow: 'span 2' }}>
-                <HousingChart data={cityData.housing} />
+                <HousingChart memberId={appliedHousingMemberId} />
               </div>
 
               <div style={{ gridRow: 'span 2', minHeight: 240 }}>
-                <EconomyChart data={cityData.economy} />
+                <LaborChart memberId={appliedLaborMemberId} />
               </div>
 
               <div style={{ gridRow: 'span 2', minHeight: 240 }}>

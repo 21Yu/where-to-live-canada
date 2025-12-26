@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import ChartCard from "./ChartCard";
 
-export default function CostChart({ memberId = 2}) {
+export default function CostChart({ memberId }) {
   const [apiData, setApiData] = useState([]);
   const [range, setRange] = useState(6);
   const [loading, setLoading] = useState(false);

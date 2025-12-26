@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import ChartCard from "./ChartCard";
 
-export default function PopulationChart({ memberId = 1 }) {
+export default function PopulationChart({ memberId }) {
   const [apiData, setApiData] = useState([]);
   const [range, setRange] = useState(10); 
   const [loading, setLoading] = useState(false);
