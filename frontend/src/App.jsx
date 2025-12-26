@@ -74,49 +74,51 @@ function App() {
     { memberId: 37, memberNameEn: "British Columbia" },
   ];
 
+  const appliedProvince = members_population.find(
+    m => m.memberId === appliedPopMemberId
+  );
+
   return (
-    <div className="app-root min-h-screen bg-gray-900 text-white">
+    <div className="app-root min-h-screen bg-[var(--bg)] text-[var(--text)] font-sans">
       <Header />
 
       <main className="app-main flex-1 w-full px-4 py-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-4 h-full" style={{ gridAutoRows: 'minmax(0, 1fr)' }}>
           <aside className="space-y-4 md:col-span-1 h-full">
-            <div className="p-3 rounded-lg bg-neutral-800/60 mt-3">
-              <h2 className="text-xs font-semibold text-gray-300">Geography</h2>
+            <div className="p-4 mt-3 bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+              <h2 className="text-xs font-semibold text-[var(--muted)]">Province</h2>
               <div className="mt-2 flex gap-2">
                 <select
-                  className="w-full rounded-md bg-gray-800 border border-gray-700 p-1 text-sm text-white"
+                  className="w-full bg-[var(--surface)] border border-[var(--border)] p-2 text-sm text-[var(--text)]"
                   value={selectedMemberId}
                   onChange={(e) => setSelectedMemberId(Number(e.target.value))}
                 >
                   {members_population.map((p) => (
-                    <option key={p.memberId} value={p.memberId} className="bg-gray-800">
+                    <option
+                      key={p.memberId}
+                      value={p.memberId}
+                      style={{
+                        backgroundColor: 'var(--surface)',
+                        color: 'var(--text)',
+                      }}
+                    >
                       {p.memberNameEn}
                     </option>
                   ))}
                 </select>
                 <button
-                  className="px-2 py-1 rounded bg-emerald-600 text-white"
+                  className="px-3 py-2 bg-[var(--accent)] text-white hover:opacity-90"
                   onClick={() => {
                     const selectedPopMember = members_population.find(
                       m => m.memberId === selectedMemberId
                     );
-
                     if (!selectedPopMember) return;
 
                     const name = selectedPopMember.memberNameEn;
 
-                    const costMatch = members_cost.find(
-                      c => c.memberNameEn === name
-                    )
-
-                    const laborMatch = members_labor.find(
-                      l => l.memberNameEn === name 
-                    );
-
-                    const housingMatch = member_housing.find(
-                      h => h.memberNameEn === name
-                    )
+                    const costMatch = members_cost.find(c => c.memberNameEn === name);
+                    const laborMatch = members_labor.find(l => l.memberNameEn === name);
+                    const housingMatch = member_housing.find(h => h.memberNameEn === name);
 
                     setAppliedPopMemberId(selectedPopMember.memberId);
                     setAppliedCostMemberId(costMatch?.memberId);
@@ -127,6 +129,14 @@ function App() {
                   Show
                 </button>
               </div>
+              {appliedProvince && (
+                <div className="p-3 mt-3 bg-[var(--surface)] border border-[var(--border)] shadow-sm">
+                  <h2 className="text-xs font-semibold text-[var(--muted)]">Selected Province</h2>
+                  <p className="mt-2 text-sm font-medium text-[var(--accent)]">
+                    {appliedProvince.memberNameEn}
+                  </p>
+                </div>
+              )}
             </div>
           </aside>
 
@@ -135,15 +145,12 @@ function App() {
               <div style={{ gridRow: 'span 2' }}>
                 <HousingChart memberId={appliedHousingMemberId} />
               </div>
-
               <div style={{ gridRow: 'span 2', minHeight: 240 }}>
                 <LaborChart memberId={appliedLaborMemberId} />
               </div>
-
               <div style={{ gridRow: 'span 2', minHeight: 240 }}>
                 <CostChart memberId={appliedCostMemberId} />
               </div>
-
               <div style={{ gridRow: 'span 2' }}>
                 <PopulationChart memberId={appliedPopMemberId} />
               </div>

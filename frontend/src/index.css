@@ -1,51 +1,29 @@
 @import "tailwindcss";
 
 :root {
-	--bg: #0b1220; /* very dark navy */
-	--surface: rgba(255,255,255,0.03); /* subtle surface */
-	--text: #e6eef8; /* light text */
-	--muted: rgba(230,238,248,0.6);
-	--radius: 12px;
-}
+	/* Backgrounds */
+	--bg: #f2eadf;          /* warm parchment */
+	--surface: #fbf3e8;     /* aged paper card */
 
-html, body, #root {
-	height: 100%;
+	/* Text */
+	--text: #3a2f25;        /* espresso brown */
+	--muted: #8a7462;       /* warm dust */
+
+	/* UI */
+	--radius: 12px;
+	--border: rgba(58, 47, 37, 0.18);
+
+	/* Accents */
+	--accent: #9b5e2f;      /* burnt caramel */
+	--accent-soft: #cfa77a; /* old gold */
 }
 
 body {
 	background-color: var(--bg);
 	color: var(--text);
-	font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	font-family: Inter, ui-sans-serif, system-ui;
+	background-image:
+		linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px);
+	background-size: 3px 3px;
 }
 
-/* App container */
-.app-root {
-	height: 100vh;
-	display: flex;
-	flex-direction: column;
-}
-
-.app-main {
-	flex: 1 1 auto;
-	width: 100%;
-}
-
-.grid-fill {
-	height: 100%;
-	grid-auto-rows: minmax(0, 1fr);
-}
-
-/* Minimal card style used by charts */
-.card {
-	border-radius: var(--radius);
-	background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-	border: 1px solid rgba(255,255,255,0.04);
-	padding: 1rem;
-}
-
-/* Muted link/text */
-.muted {
-	color: var(--muted);
-}
