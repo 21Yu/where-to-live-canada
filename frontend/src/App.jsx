@@ -4,6 +4,7 @@ import HousingChart from './components/HousingChart';
 import LaborChart from './components/LaborChart';
 import CostChart from './components/CostChart';
 import PopulationChart from './components/PopulationChart';
+import Footer from './components/Footer';
 
 function App() {
   const [selectedMemberId, setSelectedMemberId] = useState(1);
@@ -79,7 +80,7 @@ function App() {
   );
 
   return (
-    <div className="app-root min-h-screen bg-[var(--bg)] text-[var(--text)] font-sans">
+    <div className="app-root min-h-screen flex flex-col bg-[var(--bg)] text-[var(--text)] font-sans">
       <Header />
 
       <main className="app-main flex-1 w-full px-4 py-4">
@@ -158,6 +159,7 @@ function App() {
           </section>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }
