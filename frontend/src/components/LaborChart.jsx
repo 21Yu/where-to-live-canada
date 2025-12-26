@@ -34,7 +34,6 @@ export default function LaborChart({ memberId }) {
         const unempUrl = `http://127.0.0.1:8000/api/statcan/labor?latestN=${range}&memberId=${memberId}&umn=7`;
 
         const [empRes, unempRes] = await Promise.all([fetch(empUrl), fetch(unempUrl)]);
-
         if (!empRes.ok || !unempRes.ok) throw new Error("Failed to fetch labor data");
 
         const empJson = await empRes.json();
@@ -90,14 +89,14 @@ export default function LaborChart({ memberId }) {
       ) : (
         <div className="w-full h-[340px] p-4 bg-[var(--surface)] rounded-[var(--radius)]">
           {/* Range selector */}
-          <div className="flex justify-between items-center mb-2">
+          <div className="flex justify-between items-center mb-4">
             <div className="text-sm text-[var(--text)]">Range:</div>
             <div className="flex gap-2">
               {[6, 12, 24].map((r) => (
                 <button
                   key={r}
                   onClick={() => setRange(r)}
-                  className={`px-3 py-1 rounded-[var(--radius)] ${
+                  className={`px-4 py-2 font-medium ${
                     range === r
                       ? "bg-[var(--accent)] text-white"
                       : "bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]"
@@ -124,7 +123,13 @@ export default function LaborChart({ memberId }) {
               </defs>
 
               <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" />
-              <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fill: "var(--text)" }} />
+              <XAxis 
+                dataKey="month"
+                interval={0}
+                tick={false}
+                axisLine={false}
+                tickLine={false} 
+              />
               <YAxis stroke="var(--text)" />
               <Tooltip
                 contentStyle={{
@@ -134,7 +139,7 @@ export default function LaborChart({ memberId }) {
                 }}
                 formatter={(v) => `${v}%`}
               />
-              <Legend wrapperStyle={{ color: "var(--text)" }} />
+              <Legend wrapperStyle={{ display: "none" }} />
 
               <Line
                 type="monotone"
@@ -142,7 +147,7 @@ export default function LaborChart({ memberId }) {
                 name="Employment rate (%)"
                 stroke="url(#empGrad)"
                 strokeWidth={2}
-                dot={{ r: 3 }}
+                dot={{ r: 0 }}
               />
 
               <Line
@@ -151,7 +156,7 @@ export default function LaborChart({ memberId }) {
                 name="Unemployment rate (%)"
                 stroke="url(#unempGrad)"
                 strokeWidth={2}
-                dot={{ r: 3 }}
+                dot={{ r: 0 }}
               />
             </LineChart>
           </ResponsiveContainer>

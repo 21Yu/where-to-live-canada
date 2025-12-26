@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   CartesianGrid,
   XAxis,
   YAxis,
@@ -72,16 +72,16 @@ export default function HousingChart({ memberId }) {
       ) : error ? (
         <div className="p-6 text-[#b91c1c]">Error: {error}</div>
       ) : (
-        <div className="w-full h-[300px] min-h-[300px] p-4 bg-[var(--surface)] rounded-[var(--radius)]">
+        <div className="w-full h-[350px] p-4 bg-[var(--surface)] rounded-[var(--radius)]">
           {/* Range selector */}
-          <div className="flex justify-between items-center mb-2">
+          <div className="flex justify-between items-center mb-4">
             <div className="text-sm text-[var(--text)]">Range:</div>
             <div className="flex gap-2">
               {[6, 12, 24].map((r) => (
                 <button
                   key={r}
                   onClick={() => setRange(r)}
-                  className={`px-3 py-1 rounded-[var(--radius)] ${
+                  className={`px-4 py-2 font-medium ${
                     range === r
                       ? "bg-[var(--accent)] text-white"
                       : "bg-[var(--surface)] text-[var(--muted)] border border-[var(--border)]"
@@ -95,11 +95,11 @@ export default function HousingChart({ memberId }) {
 
           {/* Chart */}
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={range ? apiData.slice(-range) : apiData}>
+            <AreaChart data={range ? apiData.slice(-range) : apiData}>
               <defs>
-                <linearGradient id="housingGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="var(--accent-soft)" />
-                  <stop offset="100%" stopColor="var(--accent)" />
+                <linearGradient id="housingGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="var(--accent)" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="var(--accent-soft)" stopOpacity={0.1} />
                 </linearGradient>
               </defs>
 
@@ -107,7 +107,6 @@ export default function HousingChart({ memberId }) {
               <XAxis
                 dataKey="month"
                 interval={0}
-                padding={{ left: 8, right: 8 }}
                 tick={false}
                 axisLine={false}
                 tickLine={false}
@@ -120,16 +119,17 @@ export default function HousingChart({ memberId }) {
                   color: "var(--text)",
                 }}
               />
-              <Legend wrapperStyle={{ color: "var(--text)" }} />
-              <Line
+              <Legend wrapperStyle={{ display: "none" }} />
+              <Area
                 type="monotone"
                 dataKey="housing_price_index"
                 name="Housing Price Index"
-                stroke="url(#housingGrad)"
+                stroke="var(--accent)"
+                fill="url(#housingGrad)"
                 strokeWidth={2}
                 dot={{ r: 3 }}
               />
-            </LineChart>
+            </AreaChart>
           </ResponsiveContainer>
         </div>
       )}
