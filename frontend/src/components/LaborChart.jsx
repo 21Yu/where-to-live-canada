@@ -11,6 +11,8 @@ import {
 } from "recharts";
 import ChartCard from "./ChartCard";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function LaborChart({ memberId }) {
   const [chartData, setChartData] = useState([]);
   const [range, setRange] = useState(6);
@@ -30,8 +32,8 @@ export default function LaborChart({ memberId }) {
       setError(null);
 
       try {
-        const empUrl = `http://127.0.0.1:8000/api/statcan/labor?latestN=${range}&memberId=${memberId}&umn=9`;
-        const unempUrl = `http://127.0.0.1:8000/api/statcan/labor?latestN=${range}&memberId=${memberId}&umn=7`;
+        const empUrl = `${API_URL}/labor?latestN=${range}&memberId=${memberId}&umn=9`;
+        const unempUrl = `${API_URL}/labor?latestN=${range}&memberId=${memberId}&umn=7`;
 
         const [empRes, unempRes] = await Promise.all([fetch(empUrl), fetch(unempUrl)]);
         if (!empRes.ok || !unempRes.ok) throw new Error("Failed to fetch labor data");

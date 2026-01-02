@@ -11,6 +11,8 @@ import {
 } from "recharts";
 import ChartCard from "./ChartCard";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function HousingChart({ memberId }) {
   const [apiData, setApiData] = useState([]);
   const [range, setRange] = useState(6);
@@ -30,7 +32,7 @@ export default function HousingChart({ memberId }) {
       setError(null);
 
       try {
-        const url = `http://127.0.0.1:8000/api/statcan/housing?latestN=${range}&memberId=${memberId}`;
+        const url = `${API_URL}/housing?latestN=${range}&memberId=${memberId}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(res.statusText || "Fetch failed");
         const json = await res.json();

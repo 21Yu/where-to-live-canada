@@ -11,6 +11,8 @@ import {
 } from "recharts";
 import ChartCard from "./ChartCard";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export default function CostChart({ memberId }) {
   const [apiData, setApiData] = useState([]);
   const [range, setRange] = useState(6);
@@ -25,7 +27,7 @@ export default function CostChart({ memberId }) {
       setError(null);
       try {
         const latestN = range;
-        const url = `http://127.0.0.1:8000/api/statcan/CPI?latestN=${latestN}&memberId=${memberId}`;
+        const url = `${API_URL}/CPI?latestN=${latestN}&memberId=${memberId}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error(res.statusText || "Fetch failed");
         const json = await res.json();
