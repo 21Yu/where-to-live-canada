@@ -1,7 +1,18 @@
 # Where To Live Canada
 
+## Overview
 An interactive data-driven web application that helps users explore and compare Canadian provinces and territories using official **Statistics Canada** data.
 The app visualizes **population trends**, **cost of living (CPI)**, **labour market indicators**, and **housing price indexes** to support informed relocation decisions.
+
+## Live Demo
+https://where-to-live-canada.vercel.app
+
+## Screenshots
+![](screenshots/Screenshot1.png)
+![](screenshots/Screenshot2.png)
+![](screenshots/Screenshot3.png)
+![](screenshots/Screenshot4.png)
+![](screenshots/Screenshot5.png)
 
 ## Features
 
